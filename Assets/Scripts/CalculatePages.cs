@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEditor;
 
 public class CalculatePages : MonoBehaviour {
 
-    [SerializeField] private string loadBook = "Проповедь 1. 36 Уроков Вивека"; // имя текстового файла
+	[SerializeField] private string loadBook; // имя текстового файла
 	[SerializeField] private string booksPath = "Books"; // имя папки с текстовым файлом в Resources
 	[SerializeField] private Text leftPage; // левая страница
 	[SerializeField] private Text rightPage; // правая страница
@@ -18,10 +19,10 @@ public class CalculatePages : MonoBehaviour {
 
 	void Start()
 	{
-		nextButton.onClick.AddListener(()=>{Next();});
+		nextButton.onClick.AddListener(()=>{Next();}); // Тут ошибку выдает
 		prevButton.onClick.AddListener(()=>{Prev();});
 		leftPage.rectTransform.sizeDelta = rightPage.rectTransform.sizeDelta;
-
+		loadBook = PlayerPrefs.GetString("selectedBook"); // Сохранил переменную через PlayerPrefs. Такая фигня типа глобальных статов. 
 		Calculate(loadBook);
 	}
 
@@ -74,6 +75,7 @@ public class CalculatePages : MonoBehaviour {
 			nextButton.interactable = true;
 			prevButton.interactable = false;
 			pageCount = -2;
+			Next();// Добавил, чтобы сразу всё прогрузилось
 		}
 	}
 
